@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aye Nyein San — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12232A;
+    --ink-soft:#1c3038;
+    --paper:#F3EFE4;
+    --paper-alt:#EAE3D0;
+    --paper-line:#D8CFB4;
+    --brass:#B8912F;
+    --brass-soft:#E9D9A8;
+    --jade:#3F6355;
+    --rust:#A64B3C;
+    --text:#1A1F1D;
+    --text-soft:#55584f;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--brass-soft);}
+
+  /* ---------- placeholder badges ---------- */
+  .needlink{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.02em;
+    color:var(--rust);
+    border:1px dashed var(--rust);
+    padding:3px 8px;
+    border-radius:20px;
+    margin-top:10px;
+    background:rgba(166,75,60,0.06);
+  }
+  .needlink::before{content:"↗";}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 5vw;
+    background:rgba(243,239,228,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  nav .brand{font-family:'Fraunces',serif;font-weight:600;font-size:18px;}
+  nav .links{display:flex;gap:26px;font-size:13px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;}
+  nav .links a{text-decoration:none;color:var(--text-soft);border-bottom:1px solid transparent;padding-bottom:2px;transition:.2s;}
+  nav .links a:hover{color:var(--ink);border-color:var(--brass);}
+  #navToggle{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding:150px 5vw 60px;
+    background:var(--paper);
+  }
+  .hero-top{display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:start;}
+  .hero-photo{
+    width:260px;height:260px;border:1px solid var(--ink);background:var(--paper-alt);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-photo .placeholder-text{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-soft);text-align:center;padding:20px;}
+  @media (max-width:820px){ .hero-top{grid-template-columns:1fr;} .hero-photo{width:180px;height:180px;} }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--jade);margin-bottom:18px;
+  }
+  h1.name{font-size:clamp(48px,8vw,96px);line-height:.98;color:var(--ink);}
+  .tagline{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(18px,2.2vw,26px);color:var(--jade);margin-top:14px;
+  }
+  .bio{max-width:640px;font-size:16px;line-height:1.7;color:var(--text-soft);margin-top:26px;}
+
+  /* ledger tape - signature element */
+  .tape-wrap{
+    margin-top:56px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    overflow:hidden;background:var(--ink);position:relative;
+  }
+  .tape{
+    display:flex;white-space:nowrap;animation:scroll-tape 34s linear infinite;
+    padding:16px 0;
+  }
+  .tape span{
+    font-family:'IBM Plex Mono',monospace;color:var(--paper);font-size:14px;
+    padding:0 34px;border-right:1px solid rgba(243,239,228,.25);
+    display:flex;align-items:center;gap:10px;
+  }
+  .tape span b{color:var(--brass);font-weight:600;}
+  @keyframes scroll-tape{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion:reduce){ .tape{animation:none;} }
+
+  /* ---------- section shell ---------- */
+  section{padding:100px 5vw;border-bottom:1px solid var(--paper-line);}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;gap:20px;flex-wrap:wrap;}
+  .section-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--brass);letter-spacing:.08em;}
+  h2.section-title{font-size:clamp(30px,4vw,44px);color:var(--ink);margin-top:6px;}
+  .section-note{max-width:340px;font-size:14px;color:var(--text-soft);line-height:1.6;}
+
+  /* ---------- about narrative ---------- */
+  .narrative-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;}
+  .narrative p{font-size:17px;line-height:1.8;color:var(--text);margin:0 0 18px;}
+  .thread-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--paper-line);}
+  .thread{padding:18px 0;border-bottom:1px solid var(--paper-line);}
+  .thread .k{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--jade);text-transform:uppercase;letter-spacing:.06em;}
+  .thread .v{font-family:'Fraunces',serif;font-size:19px;margin-top:4px;}
+
+  /* ---------- ledger line (scholarships / academics) ---------- */
+  .ledger{border-top:1px solid var(--ink);}
+  .ledger-row{
+    display:grid;grid-template-columns:70px 1fr auto;gap:24px;align-items:start;
+    padding:26px 0;border-bottom:1px solid var(--paper-line);
+  }
+  .ledger-row .idx{font-family:'IBM Plex Mono',monospace;color:var(--brass);font-size:14px;padding-top:4px;}
+  .ledger-row .body h3{font-size:22px;color:var(--ink);}
+  .ledger-row .body .org{font-size:13px;color:var(--jade);font-family:'IBM Plex Mono',monospace;margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+  .ledger-row .body p{margin:10px 0 0;font-size:14.5px;color:var(--text-soft);line-height:1.65;max-width:560px;}
+  .ledger-row .tag{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text-soft);text-align:right;white-space:nowrap;padding-top:4px;}
+
+  /* ---------- stat wall ---------- */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--paper-line);border:1px solid var(--paper-line);}
+  .stat{background:var(--paper);padding:28px 22px;}
+  .stat .num{font-family:'IBM Plex Mono',monospace;font-size:clamp(26px,3vw,34px);color:var(--ink);font-weight:600;}
+  .stat .label{font-size:12.5px;color:var(--text-soft);margin-top:8px;line-height:1.4;}
+
+  /* ---------- academics ---------- */
+  .grade-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .grade-block h3{font-size:14px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--jade);margin-bottom:16px;}
+  .grade-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--paper-line);font-size:15px;}
+  .grade-item b{font-family:'IBM Plex Mono',monospace;color:var(--brass);}
+
+  /* ---------- cards (leadership / social impact) ---------- */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
+  .card{
+    background:var(--paper-alt);border:1px solid var(--paper-line);padding:28px;
+    display:flex;flex-direction:column;gap:10px;transition:.25s ease;
+  }
+  .card:hover{border-color:var(--brass);transform:translateY(-3px);}
+  .card .star{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--brass);letter-spacing:.1em;}
+  .card h3{font-size:20px;color:var(--ink);}
+  .card .role{font-size:12.5px;color:var(--jade);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;}
+  .card ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--text-soft);line-height:1.7;}
+  .card .stats-inline{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
+  .card .stats-inline div{font-family:'IBM Plex Mono',monospace;}
+  .card .stats-inline b{display:block;color:var(--ink);font-size:20px;}
+  .card .stats-inline span{font-size:11px;color:var(--text-soft);}
+
+  /* ---------- projects ---------- */
+  .tier-label{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--paper);
+    background:var(--ink);padding:5px 12px;margin-bottom:26px;
+  }
+  .project-list{display:flex;flex-direction:column;}
+  .project{
+    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;
+    padding:22px 0;border-bottom:1px solid var(--paper-line);
+  }
+  .project h4{font-size:18px;color:var(--ink);}
+  .project .meta{font-size:12.5px;color:var(--jade);font-family:'IBM Plex Mono',monospace;margin-top:4px;}
+  .project p{font-size:14px;color:var(--text-soft);margin:8px 0 0;line-height:1.6;max-width:560px;}
+  .archive-note{margin-top:36px;padding:20px;border:1px dashed var(--paper-line);font-size:13.5px;color:var(--text-soft);}
+  .archive-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .archive-tags span{font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--paper-alt);border:1px solid var(--paper-line);padding:5px 10px;}
+
+  /* ---------- skills ---------- */
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px;}
+  .skill-cat h4{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--brass);margin-bottom:10px;}
+  .skill-cat p{font-size:14.5px;color:var(--text-soft);line-height:1.7;margin:0;}
+
+  /* ---------- footer / contact ---------- */
+  footer{padding:80px 5vw 50px;background:var(--ink);color:var(--paper);}
+  footer h2{color:var(--paper);font-size:clamp(28px,4vw,42px);max-width:640px;}
+  footer .contact-grid{display:flex;gap:60px;margin-top:44px;flex-wrap:wrap;}
+  footer .contact-item .k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--brass-soft);}
+  footer .contact-item .v{font-family:'Fraunces',serif;font-size:18px;margin-top:6px;}
+  footer .needlink-dark{border-color:var(--brass-soft);color:var(--brass-soft);background:rgba(233,217,168,0.08);}
+  footer .fineprint{margin-top:60px;font-size:12px;color:rgba(243,239,228,.5);font-family:'IBM Plex Mono',monospace;border-top:1px solid rgba(243,239,228,.15);padding-top:22px;}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (max-width:820px){
+    .narrative-grid,.grade-cols{grid-template-columns:1fr;}
+    nav .links{display:none;}
+    #navToggle{display:block;}
+    .ledger-row{grid-template-columns:40px 1fr;}
+    .ledger-row .tag{grid-column:2;text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Aye Nyein San</div>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#academics">Academics</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#projects">Projects</a>
+    <a href="#impact">Social Impact</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="eyebrow">Bachelor of Business (Applied Finance) · Western Sydney University Vietnam</div>
+      <h1 class="name">Aye&nbsp;Nyein&nbsp;San</h1>
+      <p class="tagline">Applied Finance — Financial Analysis — Innovation — Economic Empowerment</p>
+      <p class="bio">A high-performing Applied Finance student, ranked in the top 10% of my cohort with a 6/7 GPA. My work spans financial modelling, investment analysis and financial economics alongside entrepreneurship, international leadership and community development — with a particular interest in using finance and innovation to expand economic opportunity across Southeast Asia.</p>
+    </div>
+    <!-- PHOTO-1: replace PASTE-PHOTO-LINK-HERE below with your photo's URL -->
+    <div class="hero-photo">
+      <img src=“https://drive.google.com/file/d/1xZC4qpY0dcdYJjzTiCjuba4jnKg5BxTi/view?usp=sharing" alt="Aye Nyein San photo — replace"C:\Users\Asus\OneDrive\Pictures\my pic.jpg" with your image URL">
+    </div>
+  </div>
+
+  <div class="tape-wrap">
+    <div class="tape" id="tape"></div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="section-head">
+    <div>
+      <div class="section-num">01 — About</div>
+      <h2 class="section-title">Three connected threads</h2>
+    </div>
+  </div>
+  <div class="narrative-grid">
+    <div class="narrative">
+      <p>My work sits at the intersection of four connected areas: <b>finance &amp; economics</b> — modelling, valuation, investment and banking; <b>innovation &amp; entrepreneurship</b> — through YSEALI innovation projects, venture consulting and platform concepts; <b>leadership &amp; international engagement</b> — through YSEALI, W.UNITE and regional forums; and <b>social impact &amp; economic empowerment</b> — through education access, financial literacy and community response work.</p>
+      <p>Depending on the audience, this material tells three different stories: a <b>finance</b> narrative built on modelling, valuation and banking research; a <b>development &amp; policy</b> narrative built on financial literacy, education access and Southeast Asian economic empowerment; and an <b>innovation &amp; entrepreneurship</b> narrative built on YSEALI ventures, startup consulting and platform design.</p>
+    </div>
+    <div class="thread-list">
+      <div class="thread"><div class="k">Regional identity</div><div class="v">Myanmar · Vietnam · ASEAN · United States</div></div>
+      <div class="thread"><div class="k">Academic core</div><div class="v">Applied Finance, Accounting, Financial Economics</div></div>
+      <div class="thread"><div class="k">Applied core</div><div class="v">Entrepreneurship, Leadership, Community Development</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="scholarships">
+  <div class="section-head">
+    <div>
+      <div class="section-num">02 — Recognition</div>
+      <h2 class="section-title">Scholarships &amp; academic recognition</h2>
+    </div>
+  </div>
+  <div class="ledger">
+    <div class="ledger-row">
+      <div class="idx">2023</div>
+      <div class="body">
+        <h3>IIE Odyssey Scholarship</h3>
+        <div class="org">Institute of International Education (IIE)</div>
+        <p>An international scholarship for displaced students pursuing higher education, with support that can include tuition, housing and living expenses, and advising and community support.</p>
+        <!-- LINK-5: IIE Odyssey award letter / certificate -->
+           <div class="tag">International</div>
+    </div>
+    <div class="ledger-row">
+      <div class="idx">—</div>
+      <div class="body">
+        <h3>Myanmar Refugee Displaced Student Scholarship</h3>
+        <div class="org">Western Sydney University Vietnam — Full Scholarship</div>
+        <p>Institutional scholarship awarded based on academic competitiveness and leadership potential. Formally qualified for the Faculty Vice Dean's Award, though adjusted due to primary scholarship policy.</p>
+             <div class="tag">University</div>
+    </div>
+  </div>
+</section>
+
+<section id="academics">
+  <div class="section-head">
+    <div>
+      <div class="section-num">03 — Academics</div>
+      <h2 class="section-title">Academic performance</h2>
+    </div>
+    <p class="section-note">Bachelor of Business (Applied Finance) · Expected graduation December 2026</p>
+  </div>
+
+  <div class="stat-grid" style="margin-bottom:40px;">
+    <div class="stat"><div class="num">6/7</div><div class="label">GPA</div></div>
+    <div class="stat"><div class="num">Top 10%</div><div class="label">Class ranking</div></div>
+  </div>
+
+  <p style="font-size:15.5px;color:var(--text-soft);line-height:1.8;max-width:680px;">High Distinction / Distinction across Principles of Accounting, Corporate Finance, Economic &amp; Financial Modelling, Business Statistics, Managerial Accounting, Financial Institutions &amp; Markets, Financing Enterprises, and Investment Management.</p>
+ 
+
+<section id="leadership">
+  <div class="section-head">
+    <div>
+      <div class="section-num">04 — Leadership &amp; International Engagement</div>
+      <h2 class="section-title">Leadership, with evidence</h2>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>YSEALI Academic Fellow</h3>
+      <div class="role">Young Southeast Asian Leaders Initiative · 2025 · United States</div>
+      <p>Selected as a YSEALI Academic Fellow representing Myanmar. Participated in small-group innovation projects on economic and entrepreneurial challenges, presented in Reno and Washington, D.C., and completed training in the Business Model Canvas, value proposition design, branding/storytelling and pitch development. Also served as a Liaison Committee member and Guest Consultant to student-led startups (ENT 200), and developed the Connexion platform concept.</p>
+      <!-- LINK-6: YSEALI selection certificate / project photos -->
+      <div class="YSEALI Certificate UM and State Department.jpg">Add selection certificate / project photos</div>
+    </div>
+
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>W.UNITE — Team Leader</h3>
+      <div class="role">Western Sydney University Vietnam</div>
+      <p>Led a 7-person team for the Thingyan Festival and Tet Fair, developing execution plans, delegating responsibilities, managing university-provided funds, and coordinating logistics and media planning.</p>
+      <div class="stats-inline">
+        <div><b>7</b><span>Team members</span></div>
+        <div><b>~100</b><span>Students reached*</span></div>
+      </div>
+      <!-- LINK-7: W.UNITE event certificate / photos -->
+      <div class=""W.UNITE Project Leader.jpg"">Add event certificate / photos</div>
+      <p style="font-size:11.5px;color:var(--rust);">*Verify whether 100 applies to one event or combined events.</p>
+    </div>
+
+    <div class="card">
+      <div class="star">★★★★ Featured</div>
+      <h3>Model ASEAN Mayors Forum — Chair</h3>
+      <div class="role">Urban Explore Club · 2025</div>
+      <p>Chaired ses MAMF2025.pdf sions on ASEAN youth leadership, urban development and regional cooperation.</p>
+      <!-- LINK-8: Model ASEAN Mayors Forum chair certificate / program / photos -->
+      <div class="">Add chair certificate / program / photos</div>
+    </div>
+
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>Myanmar Earthquake Relief — Lead Organizer</h3>
+      <div class="role">Fundraiser, as a Myanmar student at Western Sydney University Vietnam</div>
+      <p>Organized and coordinated donors and volunteers, mobilizing community support and managing distribution through partner organizations.</p>
+      <div class="stats-inline">
+        <div><b>$2,000</b><span>Raised</span></div>
+        <div><b>3</b><span>Organizations</span></div>
+        <div><b>1,500+</b><span>People impacted</span></div>
+      </div>
+      <!-- LINK-3: earthquake relief donation records / confirmations -->
+      <div class="c19df0eb-79cf-4d07-87c5-1c873aa6b81c.png">Add donation records / confirmations</div>
+<div class="60e162aa-70db-4b25-95d9-5f0a36c26e56.png">Add donation records / confirmations</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head">
+    <div>
+      <div class="section-num">05 — Projects</div>
+      <h2 class="section-title">Research &amp; applied work</h2>
+    </div>
+  </div>
+
+  <span class="tier-label">Flagship research</span>
+  <div class="project-list">
+    <div class="project">
+      <div>
+        <h4>Gold as a Conditional Safe Haven Across Crises</h4>
+        <div class="meta">Financial Economics · 2026 · GFC, COVID-19, Russia–Ukraine War</div>
+        <p>Examines whether gold functions as a safe-haven asset across three distinct crisis periods.</p>
+      </div>
+      <!-- LINK-9: Gold Safe-Haven paper / findings -->
+      <div class="https://drive.google.com/file/d/1eFuPLCAtRuQljqSXmEn1PLomO2jRXQ3r/view?usp=sharing">Add paper / findings</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>Capital Adequacy at Major Vietnamese Banks</h4>
+        <div class="meta">Bank Management · 2024</div>
+        <p>Applies capital adequacy and financial-stability theory to the Vietnamese banking sector.</p>
+      </div>
+      <!-- LINK-10: Capital Adequacy report -->
+      <div class="https://www.canva.com/design/DAG3I-1QBio/O0p6ep-haERrMZ6qL2352Q/edit ">Add report</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>Financial Sustainability Analysis — Salween Academy</h4>
+        <div class="meta">Financial Analysis · 2024</div>
+        <p>Academic financial analysis of an organization I also taught and volunteered with directly.</p>
+      </div>
+      <!-- LINK-11: Salween Academy financial sustainability report -->
+      <div class="https://canva.link/o6t223xegbuymgt ">Add report</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>ASEAN Financial Literacy &amp; Entrepreneurship Development</h4>
+        <div class="meta">Financial Inclusion · Youth Development</div>
+        <p>Connects financial literacy to entrepreneurship and economic empowerment across ASEAN.</p>
+      </div>
+      <!-- LINK-12: ASEAN Financial Literacy report -->
+      <div class="ASEAN Financial Literacy & Entrepreneurship Development Proposal.pdf">Add report</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>Portfolio Performance Evaluation</h4>
+        <div class="meta">Investment Management · 2026</div>
+        <p>Portfolio construction, return and risk analysis, benchmarking and investment recommendations.</p>
+      </div>
+      <!-- LINK-13: Portfolio Performance Evaluation methodology / results -->
+      <div class="https://canva.link/dplcgy9u0ohwpum ">Add methodology / results</div>
+    </div>
+  </div>
+
+  <span class="tier-label" style="margin-top:56px;">Professional application</span>
+  <div class="project-list">
+    <div class="project">
+      <div><h4>Citibank Investment Banking Simulation — Buy-Side Analyst</h4><div class="meta">Retail sector</div><p>Built a five-year pro forma income statement, analysed cash flows and comparable companies, and presented to an investment committee.</p></div>
+      <!-- LINK-14: Citibank simulation summary / certificate -->
+      <div class="Citibank Investment Banking Simulation (Forage) ">Add summary / certificate</div>
+    </div>
+    <div class="project">
+      <div><h4>KPMG U.S. Audit Simulation</h4><div class="meta">Audit of a fictional client</div><p>Set materiality levels, assessed the Order-to-Cash cycle and presented conclusions in a client-facing video.</p></div>
+      <!-- LINK-15: KPMG simulation certificate / video link -->
+      <div class=“KPMG U.S. Audit Simulation (Forage) ">Add certificate / video link</div>
+    </div>
+    <div class="project">
+      <div><h4>Apple DCF Valuation</h4><div class="meta">Valuation</div><p>Full DCF build: financials, forecast, assumptions, sensitivity analysis and valuation.</p></div>
+      <!-- LINK-16: Apple DCF model / file -->
+      <div class="Apple Inc. (AAPL) – Equity Research & DCF Valuation (2022 - 2030) ">Add model / file</div>
+    </div>
+    <div class="project">
+      <div><h4>Corporate Financial Performance Analysis</h4><div class="meta">Ratio analysis</div><p>Ratio-based evaluation of corporate financial performance.</p></div>
+      <!-- LINK-17: Corporate Financial Performance full title / report -->
+      <div class="Corporate Financial Performance Analysis Using Ratio & DuPont Methods">Add full title / report</div>
+    </div>
+    <div class="project">
+      <div><h4>Analysis of Stock Market Regulation in Australia & Canada</h4><div class="meta">Financial markets &amp; regulation</div><p>Examines investor protection and market integrity within the Australian regulatory framework.</p></div>
+      <!-- LINK-18: Stock Market Regulation full title / report -->
+      <div class="Analysis of Stock Market Regulation in Australia and Canada for Small to Medium.pdf">Add full title / report</div>
+    </div>
+  </div>
+
+  <div class="archive-note">
+    <b>Academic Project Archive</b> — additional coursework spanning innovation and political economy, available on request or as a linked archive page:
+    <div class="archive-tags">
+      <span>Connexion (YSEALI platform concept)</span>
+      <span>SME + AI Business Intelligence Platform</span>
+      <span>Radical vs Incremental Innovation</span>
+      <span>Travel-Friendly Makeup Remover</span>
+      <span>Locke vs Rawls — Property &amp; Redistribution</span>
+      <span>Marx — Labour, Labour Power &amp; Surplus Value</span>
+      <span>Financial Accounting — Journal Entries</span>
+      <span>Cost Accounting &amp; Managerial Decision-Making</span>
+      <span>Jollibee Training Needs Assessment</span>
+      <span>Budweiser CSR Analysis</span>
+      <span>Customer Satisfaction &amp; Sales Performance</span>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="section-head">
+    <div>
+      <div class="section-num">06 — Social Impact</div>
+      <h2 class="section-title">Education, relief &amp; community</h2>
+    </div>
+  </div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>Salween Academy</h3>
+      <div class="role">GED Mathematics Teacher &amp; Program Support</div>
+      <p>Taught GED mathematics to students from disadvantaged backgrounds, supporting university and scholarship pathways, and helped coordinate academy activities and programs.</p>
+      <div class="stats-inline">
+        <div><b>~30</b><span>Students supported</span></div>
+        <div><b>~20</b><span>Secured university scholarships</span></div>
+      </div>
+      <!-- LINK-19: Salween Academy teaching evidence / outcomes -->
+      <div class="Salween Academy - GED Tutors ">Add teaching evidence / outcomes</div>
+    </div>
+    <div class="card">
+      <h3>Salween Academy Earthquake Relief</h3>
+      <div class="role">Fundraiser, as a Teacher at Salween Academy</div>
+      <p>A separate fundraising effort from the Western Sydney University campaign above, run in my capacity as a teacher at Salween Academy.</p>
+      <div class="stats-inline"><div><b>~$3,700</b><span>Raised</span></div></div>
+      <!-- LINK-4: Salween Academy earthquake fundraiser evidence -->
+      <div class="Salween Academy ">Add fundraiser evidence</div>
+    </div>
+    <div class="card">
+      <h3>Green Summer</h3>
+      <div class="role">Community Volunteer · Ho Chi Minh City, Vietnam</div>
+      <p>Environmental clean-up work and English teaching for children, alongside Vietnamese and international students.</p>
+      <!-- LINK-20: Green Summer certificate / photos -->
+      <div class="needlink">Add certificate / photos</div>
+    </div>
+    <div class="card">
+      <h3>Run Free Education Foundation</h3>
+      <div class="role">Volunteer Teacher · Jul–Dec 2022</div>
+      <p>Volunteer teaching and student support.</p>
+      <!-- LINK-21: Run Free Education Foundation details / evidence -->
+      <div class="needlink">Add subject / student details</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <div>
+      <div class="section-num">07 — Skills</div>
+      <h2 class="section-title">Technical &amp; applied skills</h2>
+    </div>
+  </div>
+  <div class="skill-grid">
+    <div class="skill-cat"><h4>Finance</h4><p>Financial modelling, DCF &amp; comparable company valuation, forecasting, portfolio evaluation, buy-side analysis, capital adequacy, financial markets &amp; regulation.</p></div>
+    <div class="skill-cat"><h4>Accounting</h4><p>Financial &amp; managerial accounting, cost accounting, journal entries, financial statements, audit fundamentals, materiality, Order-to-Cash analysis.</p></div>
+    <div class="skill-cat"><h4>Research</h4><p>Research design, data analysis, statistical &amp; quantitative reasoning, comparative and policy analysis, presentation of findings.</p></div>
+    <div class="skill-cat"><h4>Tools</h4><p>Excel (advanced) — financial modelling &amp; sensitivity analysis. Tableau, Microsoft 365, Google Workspace, Trello, Notion, Canva (intermediate). Python (basic) — financial data manipulation.</p></div>
+    <div class="skill-cat"><h4>Leadership</h4><p>Team leadership, delegation, event &amp; project management, budget/fund management, stakeholder and volunteer coordination.</p></div>
+    <div class="skill-cat"><h4>Teaching &amp; Mentoring</h4><p>Mathematics and English instruction, student advising, educational planning, scholarship guidance.</p></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="section-num" style="color:var(--brass-soft);">08 — Contact</div>
+  <h2>Let's connect.</h2>
+  <div class="contact-grid">
+    <!-- LINK-22: email address -->
+    <div class="contact-item"><div class="k">Email</div><div class="v">—</div><div class="needlink needlink-dark">Add email address</div></div>
+    <!-- LINK-23: LinkedIn URL -->
+    <div class="contact-item"><div class="k">LinkedIn</div><div class="v">—</div><div class="needlink needlink-dark">Add LinkedIn URL</div></div>
+    <!-- LINK-24: resume/CV file link -->
+    <div class="contact-item"><div class="k">Resume / CV</div><div class="v">—</div><div class="needlink needlink-dark">Add file link</div></div>
+  </div>
+  <div class="fineprint">Aye Nyein San — Bachelor of Business (Applied Finance), Western Sydney University Vietnam · Expected graduation December 2026</div>
+</footer>
+
+<script>
+  const tapeItems = [
+    "6/7 GPA","TOP 10% COHORT","IIE ODYSSEY SCHOLAR — 2023","YSEALI ACADEMIC FELLOW — 2025",
+    "7-PERSON TEAM LEADER","$2,000 RELIEF FUNDRAISING","~30 GED STUDENTS TAUGHT","~20 SCHOLARSHIP OUTCOMES",
+    "93/100 CORPORATE FINANCE","1,500+ PEOPLE IMPACTED"
+  ];
+  const tape = document.getElementById('tape');
+  const build = () => tapeItems.map(t => `<span><b>◆</b>${t}</span>`).join('');
+  tape.innerHTML = build() + build();
+
+  const revealEls = document.querySelectorAll('section, .card, .project, .ledger-row');
+  revealEls.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aye Nyein San — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12232A;
+    --ink-soft:#1c3038;
+    --paper:#F3EFE4;
+    --paper-alt:#EAE3D0;
+    --paper-line:#D8CFB4;
+    --brass:#B8912F;
+    --brass-soft:#E9D9A8;
+    --jade:#3F6355;
+    --rust:#A64B3C;
+    --text:#1A1F1D;
+    --text-soft:#55584f;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  ::selection{background:var(--brass-soft);}
+
+  /* ---------- placeholder badges ---------- */
+  .needlink{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.02em;
+    color:var(--rust);
+    border:1px dashed var(--rust);
+    padding:3px 8px;
+    border-radius:20px;
+    margin-top:10px;
+    background:rgba(166,75,60,0.06);
+  }
+  .needlink::before{content:"↗";}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:18px 5vw;
+    background:rgba(243,239,228,0.86);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  nav .brand{font-family:'Fraunces',serif;font-weight:600;font-size:18px;}
+  nav .links{display:flex;gap:26px;font-size:13px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.06em;}
+  nav .links a{text-decoration:none;color:var(--text-soft);border-bottom:1px solid transparent;padding-bottom:2px;transition:.2s;}
+  nav .links a:hover{color:var(--ink);border-color:var(--brass);}
+  #navToggle{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink);}
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding:150px 5vw 60px;
+    background:var(--paper);
+  }
+  .hero-top{display:grid;grid-template-columns:1fr 260px;gap:40px;align-items:start;}
+  .hero-photo{
+    width:260px;height:260px;border:1px solid var(--ink);background:var(--paper-alt);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-photo .placeholder-text{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-soft);text-align:center;padding:20px;}
+  @media (max-width:820px){ .hero-top{grid-template-columns:1fr;} .hero-photo{width:180px;height:180px;} }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--jade);margin-bottom:18px;
+  }
+  h1.name{font-size:clamp(48px,8vw,96px);line-height:.98;color:var(--ink);}
+  .tagline{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:clamp(18px,2.2vw,26px);color:var(--jade);margin-top:14px;
+  }
+  .bio{max-width:640px;font-size:16px;line-height:1.7;color:var(--text-soft);margin-top:26px;}
+
+  /* ledger tape - signature element */
+  .tape-wrap{
+    margin-top:56px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    overflow:hidden;background:var(--ink);position:relative;
+  }
+  .tape{
+    display:flex;white-space:nowrap;animation:scroll-tape 34s linear infinite;
+    padding:16px 0;
+  }
+  .tape span{
+    font-family:'IBM Plex Mono',monospace;color:var(--paper);font-size:14px;
+    padding:0 34px;border-right:1px solid rgba(243,239,228,.25);
+    display:flex;align-items:center;gap:10px;
+  }
+  .tape span b{color:var(--brass);font-weight:600;}
+  @keyframes scroll-tape{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion:reduce){ .tape{animation:none;} }
+
+  /* ---------- section shell ---------- */
+  section{padding:100px 5vw;border-bottom:1px solid var(--paper-line);}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;gap:20px;flex-wrap:wrap;}
+  .section-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--brass);letter-spacing:.08em;}
+  h2.section-title{font-size:clamp(30px,4vw,44px);color:var(--ink);margin-top:6px;}
+  .section-note{max-width:340px;font-size:14px;color:var(--text-soft);line-height:1.6;}
+
+  /* ---------- about narrative ---------- */
+  .narrative-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;}
+  .narrative p{font-size:17px;line-height:1.8;color:var(--text);margin:0 0 18px;}
+  .thread-list{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--paper-line);}
+  .thread{padding:18px 0;border-bottom:1px solid var(--paper-line);}
+  .thread .k{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--jade);text-transform:uppercase;letter-spacing:.06em;}
+  .thread .v{font-family:'Fraunces',serif;font-size:19px;margin-top:4px;}
+
+  /* ---------- ledger line (scholarships / academics) ---------- */
+  .ledger{border-top:1px solid var(--ink);}
+  .ledger-row{
+    display:grid;grid-template-columns:70px 1fr auto;gap:24px;align-items:start;
+    padding:26px 0;border-bottom:1px solid var(--paper-line);
+  }
+  .ledger-row .idx{font-family:'IBM Plex Mono',monospace;color:var(--brass);font-size:14px;padding-top:4px;}
+  .ledger-row .body h3{font-size:22px;color:var(--ink);}
+  .ledger-row .body .org{font-size:13px;color:var(--jade);font-family:'IBM Plex Mono',monospace;margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+  .ledger-row .body p{margin:10px 0 0;font-size:14.5px;color:var(--text-soft);line-height:1.65;max-width:560px;}
+  .ledger-row .tag{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text-soft);text-align:right;white-space:nowrap;padding-top:4px;}
+
+  /* ---------- stat wall ---------- */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--paper-line);border:1px solid var(--paper-line);}
+  .stat{background:var(--paper);padding:28px 22px;}
+  .stat .num{font-family:'IBM Plex Mono',monospace;font-size:clamp(26px,3vw,34px);color:var(--ink);font-weight:600;}
+  .stat .label{font-size:12.5px;color:var(--text-soft);margin-top:8px;line-height:1.4;}
+
+  /* ---------- academics ---------- */
+  .grade-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .grade-block h3{font-size:14px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--jade);margin-bottom:16px;}
+  .grade-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--paper-line);font-size:15px;}
+  .grade-item b{font-family:'IBM Plex Mono',monospace;color:var(--brass);}
+
+  /* ---------- cards (leadership / social impact) ---------- */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
+  .card{
+    background:var(--paper-alt);border:1px solid var(--paper-line);padding:28px;
+    display:flex;flex-direction:column;gap:10px;transition:.25s ease;
+  }
+  .card:hover{border-color:var(--brass);transform:translateY(-3px);}
+  .card .star{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--brass);letter-spacing:.1em;}
+  .card h3{font-size:20px;color:var(--ink);}
+  .card .role{font-size:12.5px;color:var(--jade);font-family:'IBM Plex Mono',monospace;text-transform:uppercase;}
+  .card ul{margin:8px 0 0;padding-left:18px;font-size:14px;color:var(--text-soft);line-height:1.7;}
+  .card .stats-inline{display:flex;gap:18px;margin-top:10px;flex-wrap:wrap;}
+  .card .stats-inline div{font-family:'IBM Plex Mono',monospace;}
+  .card .stats-inline b{display:block;color:var(--ink);font-size:20px;}
+  .card .stats-inline span{font-size:11px;color:var(--text-soft);}
+
+  /* ---------- projects ---------- */
+  .tier-label{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--paper);
+    background:var(--ink);padding:5px 12px;margin-bottom:26px;
+  }
+  .project-list{display:flex;flex-direction:column;}
+  .project{
+    display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;
+    padding:22px 0;border-bottom:1px solid var(--paper-line);
+  }
+  .project h4{font-size:18px;color:var(--ink);}
+  .project .meta{font-size:12.5px;color:var(--jade);font-family:'IBM Plex Mono',monospace;margin-top:4px;}
+  .project p{font-size:14px;color:var(--text-soft);margin:8px 0 0;line-height:1.6;max-width:560px;}
+  .archive-note{margin-top:36px;padding:20px;border:1px dashed var(--paper-line);font-size:13.5px;color:var(--text-soft);}
+  .archive-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+  .archive-tags span{font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--paper-alt);border:1px solid var(--paper-line);padding:5px 10px;}
+
+  /* ---------- skills ---------- */
+  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px;}
+  .skill-cat h4{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--brass);margin-bottom:10px;}
+  .skill-cat p{font-size:14.5px;color:var(--text-soft);line-height:1.7;margin:0;}
+
+  /* ---------- footer / contact ---------- */
+  footer{padding:80px 5vw 50px;background:var(--ink);color:var(--paper);}
+  footer h2{color:var(--paper);font-size:clamp(28px,4vw,42px);max-width:640px;}
+  footer .contact-grid{display:flex;gap:60px;margin-top:44px;flex-wrap:wrap;}
+  footer .contact-item .k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--brass-soft);}
+  footer .contact-item .v{font-family:'Fraunces',serif;font-size:18px;margin-top:6px;}
+  footer .needlink-dark{border-color:var(--brass-soft);color:var(--brass-soft);background:rgba(233,217,168,0.08);}
+  footer .fineprint{margin-top:60px;font-size:12px;color:rgba(243,239,228,.5);font-family:'IBM Plex Mono',monospace;border-top:1px solid rgba(243,239,228,.15);padding-top:22px;}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (max-width:820px){
+    .narrative-grid,.grade-cols{grid-template-columns:1fr;}
+    nav .links{display:none;}
+    #navToggle{display:block;}
+    .ledger-row{grid-template-columns:40px 1fr;}
+    .ledger-row .tag{grid-column:2;text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Aye Nyein San</div>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#scholarships">Scholarships</a>
+    <a href="#academics">Academics</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#projects">Projects</a>
+    <a href="#impact">Social Impact</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="eyebrow">Bachelor of Business (Applied Finance) · Western Sydney University Vietnam</div>
+      <h1 class="name">Aye&nbsp;Nyein&nbsp;San</h1>
+      <p class="tagline">Applied Finance — Financial Analysis — Innovation — Economic Empowerment</p>
+      <p class="bio">A high-performing Applied Finance student, ranked in the top 10% of my cohort with a 6/7 GPA. My work spans financial modelling, investment analysis and financial economics alongside entrepreneurship, international leadership and community development — with a particular interest in using finance and innovation to expand economic opportunity across Southeast Asia.</p>
+    </div>
+    <!-- PHOTO-1: replace PASTE-PHOTO-LINK-HERE below with your photo's URL -->
+    <div class="hero-photo">
+      <img src="PASTE-PHOTO-LINK-HERE" alt="Aye Nyein San photo — replace PASTE-PHOTO-LINK-HERE with your image URL">
+    </div>
+  </div>
+
+  <div class="tape-wrap">
+    <div class="tape" id="tape"></div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="section-head">
+    <div>
+      <div class="section-num">01 — About</div>
+      <h2 class="section-title">Three connected threads</h2>
+    </div>
+  </div>
+  <div class="narrative-grid">
+    <div class="narrative">
+      <p>My work sits at the intersection of four connected areas: <b>finance &amp; economics</b> — modelling, valuation, investment and banking; <b>innovation &amp; entrepreneurship</b> — through YSEALI innovation projects, venture consulting and platform concepts; <b>leadership &amp; international engagement</b> — through YSEALI, W.UNITE and regional forums; and <b>social impact &amp; economic empowerment</b> — through education access, financial literacy and community response work.</p>
+      <p>Depending on the audience, this material tells three different stories: a <b>finance</b> narrative built on modelling, valuation and banking research; a <b>development &amp; policy</b> narrative built on financial literacy, education access and Southeast Asian economic empowerment; and an <b>innovation &amp; entrepreneurship</b> narrative built on YSEALI ventures, startup consulting and platform design.</p>
+    </div>
+    <div class="thread-list">
+      <div class="thread"><div class="k">Regional identity</div><div class="v">Myanmar · Vietnam · ASEAN · United States</div></div>
+      <div class="thread"><div class="k">Academic core</div><div class="v">Applied Finance, Accounting, Financial Economics</div></div>
+      <div class="thread"><div class="k">Applied core</div><div class="v">Entrepreneurship, Leadership, Community Development</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="scholarships">
+  <div class="section-head">
+    <div>
+      <div class="section-num">02 — Recognition</div>
+      <h2 class="section-title">Scholarships &amp; academic recognition</h2>
+    </div>
+  </div>
+  <div class="ledger">
+    <div class="ledger-row">
+      <div class="idx">2023</div>
+      <div class="body">
+        <h3>IIE Odyssey Scholarship</h3>
+        <div class="org">Institute of International Education (IIE)</div>
+        <p>An international scholarship for displaced students pursuing higher education, with support that can include tuition, housing and living expenses, and advising and community support.</p>
+        <!-- LINK-5: IIE Odyssey award letter / certificate -->
+        <div class="needlink">Add award letter / certificate</div>
+      </div>
+      <div class="tag">International</div>
+    </div>
+    <div class="ledger-row">
+      <div class="idx">—</div>
+      <div class="body">
+        <h3>Myanmar Refugee Displaced Student Scholarship</h3>
+        <div class="org">Western Sydney University Vietnam — Full Scholarship</div>
+        <p>Institutional scholarship awarded based on academic competitiveness and leadership potential. Formally qualified for the Faculty Vice Dean's Award, though adjusted due to primary scholarship policy.</p>
+        <!-- LINK-2: WSU scholarship award letter / certificate -->
+        <div class="needlink">Add award letter / certificate</div>
+      </div>
+      <div class="tag">University</div>
+    </div>
+  </div>
+</section>
+
+<section id="academics">
+  <div class="section-head">
+    <div>
+      <div class="section-num">03 — Academics</div>
+      <h2 class="section-title">Academic performance</h2>
+    </div>
+    <p class="section-note">Bachelor of Business (Applied Finance) · Expected graduation December 2026</p>
+  </div>
+
+  <div class="stat-grid" style="margin-bottom:40px;">
+    <div class="stat"><div class="num">6/7</div><div class="label">GPA</div></div>
+    <div class="stat"><div class="num">Top 10%</div><div class="label">Class ranking</div></div>
+  </div>
+
+  <p style="font-size:15.5px;color:var(--text-soft);line-height:1.8;max-width:680px;">High Distinction / Distinction across Principles of Accounting, Corporate Finance, Economic &amp; Financial Modelling, Business Statistics, Managerial Accounting, Financial Institutions &amp; Markets, Financing Enterprises, and Investment Management.</p>
+  <!-- LINK-1: transcript / GPA verification -->
+  <div class="needlink" style="margin-top:24px;">Add transcript / GPA verification</div>
+</section>
+
+<section id="leadership">
+  <div class="section-head">
+    <div>
+      <div class="section-num">04 — Leadership &amp; International Engagement</div>
+      <h2 class="section-title">Leadership, with evidence</h2>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>YSEALI Academic Fellow</h3>
+      <div class="role">Young Southeast Asian Leaders Initiative · 2025 · United States</div>
+      <p>Selected as a YSEALI Academic Fellow representing Myanmar. Participated in small-group innovation projects on economic and entrepreneurial challenges, presented in Reno and Washington, D.C., and completed training in the Business Model Canvas, value proposition design, branding/storytelling and pitch development. Also served as a Liaison Committee member and Guest Consultant to student-led startups (ENT 200), and developed the Connexion platform concept.</p>
+      <!-- LINK-6: YSEALI selection certificate / project photos -->
+      <div class="needlink">Add selection certificate / project photos</div>
+    </div>
+
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>W.UNITE — Team Leader</h3>
+      <div class="role">Western Sydney University Vietnam</div>
+      <p>Led a 7-person team for the Thingyan Festival and Tet Fair, developing execution plans, delegating responsibilities, managing university-provided funds, and coordinating logistics and media planning.</p>
+      <div class="stats-inline">
+        <div><b>7</b><span>Team members</span></div>
+        <div><b>~100</b><span>Students reached*</span></div>
+      </div>
+      <!-- LINK-7: W.UNITE event certificate / photos -->
+      <div class="needlink">Add event certificate / photos</div>
+      <p style="font-size:11.5px;color:var(--rust);">*Verify whether 100 applies to one event or combined events.</p>
+    </div>
+
+    <div class="card">
+      <div class="star">★★★★ Featured</div>
+      <h3>Model ASEAN Mayors Forum — Chair</h3>
+      <div class="role">Urban Explore Club · 2025</div>
+      <p>Chaired sessions on ASEAN youth leadership, urban development and regional cooperation.</p>
+      <!-- LINK-8: Model ASEAN Mayors Forum chair certificate / program / photos -->
+      <div class="needlink">Add chair certificate / program / photos</div>
+    </div>
+
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>Myanmar Earthquake Relief — Lead Organizer</h3>
+      <div class="role">Fundraiser, as a Myanmar student at Western Sydney University Vietnam</div>
+      <p>Organized and coordinated donors and volunteers, mobilizing community support and managing distribution through partner organizations.</p>
+      <div class="stats-inline">
+        <div><b>$2,000</b><span>Raised</span></div>
+        <div><b>3</b><span>Organizations</span></div>
+        <div><b>1,500+</b><span>People impacted</span></div>
+      </div>
+      <!-- LINK-3: earthquake relief donation records / confirmations -->
+      <div class="needlink">Add donation records / confirmations</div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-head">
+    <div>
+      <div class="section-num">05 — Projects</div>
+      <h2 class="section-title">Research &amp; applied work</h2>
+    </div>
+  </div>
+
+  <span class="tier-label">Flagship research</span>
+  <div class="project-list">
+    <div class="project">
+      <div>
+        <h4>Gold as a Conditional Safe Haven Across Crises</h4>
+        <div class="meta">Financial Economics · 2026 · GFC, COVID-19, Russia–Ukraine War</div>
+        <p>Examines whether gold functions as a safe-haven asset across three distinct crisis periods.</p>
+      </div>
+      <!-- LINK-9: Gold Safe-Haven paper / findings -->
+      <div class="needlink">Add paper / findings</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>Capital Adequacy at Major Vietnamese Banks</h4>
+        <div class="meta">Bank Management · 2024</div>
+        <p>Applies capital adequacy and financial-stability theory to the Vietnamese banking sector.</p>
+      </div>
+      <!-- LINK-10: Capital Adequacy report -->
+      <div class="needlink">Add report</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>Financial Sustainability Analysis — Salween Academy</h4>
+        <div class="meta">Financial Analysis · 2024</div>
+        <p>Academic financial analysis of an organization I also taught and volunteered with directly.</p>
+      </div>
+      <!-- LINK-11: Salween Academy financial sustainability report -->
+      <div class="needlink">Add report</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>ASEAN Financial Literacy &amp; Entrepreneurship Development</h4>
+        <div class="meta">Financial Inclusion · Youth Development</div>
+        <p>Connects financial literacy to entrepreneurship and economic empowerment across ASEAN.</p>
+      </div>
+      <!-- LINK-12: ASEAN Financial Literacy report -->
+      <div class="needlink">Add report</div>
+    </div>
+    <div class="project">
+      <div>
+        <h4>Portfolio Performance Evaluation</h4>
+        <div class="meta">Investment Management · 2026</div>
+        <p>Portfolio construction, return and risk analysis, benchmarking and investment recommendations.</p>
+      </div>
+      <!-- LINK-13: Portfolio Performance Evaluation methodology / results -->
+      <div class="needlink">Add methodology / results</div>
+    </div>
+  </div>
+
+  <span class="tier-label" style="margin-top:56px;">Professional application</span>
+  <div class="project-list">
+    <div class="project">
+      <div><h4>Citibank Investment Banking Simulation — Buy-Side Analyst</h4><div class="meta">Retail sector</div><p>Built a five-year pro forma income statement, analysed cash flows and comparable companies, and presented to an investment committee.</p></div>
+      <!-- LINK-14: Citibank simulation summary / certificate -->
+      <div class="needlink">Add summary / certificate</div>
+    </div>
+    <div class="project">
+      <div><h4>KPMG U.S. Audit Simulation</h4><div class="meta">Audit of a fictional client</div><p>Set materiality levels, assessed the Order-to-Cash cycle and presented conclusions in a client-facing video.</p></div>
+      <!-- LINK-15: KPMG simulation certificate / video link -->
+      <div class="needlink">Add certificate / video link</div>
+    </div>
+    <div class="project">
+      <div><h4>Apple DCF Valuation</h4><div class="meta">Valuation</div><p>Full DCF build: financials, forecast, assumptions, sensitivity analysis and valuation.</p></div>
+      <!-- LINK-16: Apple DCF model / file -->
+      <div class="needlink">Add model / file</div>
+    </div>
+    <div class="project">
+      <div><h4>Corporate Financial Performance Analysis</h4><div class="meta">Ratio analysis</div><p>Ratio-based evaluation of corporate financial performance.</p></div>
+      <!-- LINK-17: Corporate Financial Performance full title / report -->
+      <div class="needlink">Add full title / report</div>
+    </div>
+    <div class="project">
+      <div><h4>Analysis of Stock Market Regulation in Australia</h4><div class="meta">Financial markets &amp; regulation</div><p>Examines investor protection and market integrity within the Australian regulatory framework.</p></div>
+      <!-- LINK-18: Stock Market Regulation full title / report -->
+      <div class="needlink">Add full title / report</div>
+    </div>
+  </div>
+
+  <div class="archive-note">
+    <b>Academic Project Archive</b> — additional coursework spanning innovation and political economy, available on request or as a linked archive page:
+    <div class="archive-tags">
+      <span>Connexion (YSEALI platform concept)</span>
+      <span>SME + AI Business Intelligence Platform</span>
+      <span>Radical vs Incremental Innovation</span>
+      <span>Travel-Friendly Makeup Remover</span>
+      <span>Locke vs Rawls — Property &amp; Redistribution</span>
+      <span>Marx — Labour, Labour Power &amp; Surplus Value</span>
+      <span>Financial Accounting — Journal Entries</span>
+      <span>Cost Accounting &amp; Managerial Decision-Making</span>
+      <span>Jollibee Training Needs Assessment</span>
+      <span>Budweiser CSR Analysis</span>
+      <span>Customer Satisfaction &amp; Sales Performance</span>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <div class="section-head">
+    <div>
+      <div class="section-num">06 — Social Impact</div>
+      <h2 class="section-title">Education, relief &amp; community</h2>
+    </div>
+  </div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="star">★★★★★ Flagship</div>
+      <h3>Salween Academy</h3>
+      <div class="role">GED Mathematics Teacher &amp; Program Support</div>
+      <p>Taught GED mathematics to students from disadvantaged backgrounds, supporting university and scholarship pathways, and helped coordinate academy activities and programs.</p>
+      <div class="stats-inline">
+        <div><b>~30</b><span>Students supported</span></div>
+        <div><b>~20</b><span>Secured university scholarships</span></div>
+      </div>
+      <!-- LINK-19: Salween Academy teaching evidence / outcomes -->
+      <div class="needlink">Add teaching evidence / outcomes</div>
+    </div>
+    <div class="card">
+      <h3>Salween Academy Earthquake Relief</h3>
+      <div class="role">Fundraiser, as a Teacher at Salween Academy</div>
+      <p>A separate fundraising effort from the Western Sydney University campaign above, run in my capacity as a teacher at Salween Academy.</p>
+      <div class="stats-inline"><div><b>~$3,700</b><span>Raised</span></div></div>
+      <!-- LINK-4: Salween Academy earthquake fundraiser evidence -->
+      <div class="needlink">Add fundraiser evidence</div>
+    </div>
+    <div class="card">
+      <h3>Green Summer</h3>
+      <div class="role">Community Volunteer · Ho Chi Minh City, Vietnam</div>
+      <p>Environmental clean-up work and English teaching for children, alongside Vietnamese and international students.</p>
+      <!-- LINK-20: Green Summer certificate / photos -->
+      <div class="needlink">Add certificate / photos</div>
+    </div>
+    <div class="card">
+      <h3>Run Free Education Foundation</h3>
+      <div class="role">Volunteer Teacher · Jul–Dec 2022</div>
+      <p>Volunteer teaching and student support.</p>
+      <!-- LINK-21: Run Free Education Foundation details / evidence -->
+      <div class="needlink">Add subject / student details</div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-head">
+    <div>
+      <div class="section-num">07 — Skills</div>
+      <h2 class="section-title">Technical &amp; applied skills</h2>
+    </div>
+  </div>
+  <div class="skill-grid">
+    <div class="skill-cat"><h4>Finance</h4><p>Financial modelling, DCF &amp; comparable company valuation, forecasting, portfolio evaluation, buy-side analysis, capital adequacy, financial markets &amp; regulation.</p></div>
+    <div class="skill-cat"><h4>Accounting</h4><p>Financial &amp; managerial accounting, cost accounting, journal entries, financial statements, audit fundamentals, materiality, Order-to-Cash analysis.</p></div>
+    <div class="skill-cat"><h4>Research</h4><p>Research design, data analysis, statistical &amp; quantitative reasoning, comparative and policy analysis, presentation of findings.</p></div>
+    <div class="skill-cat"><h4>Tools</h4><p>Excel (advanced) — financial modelling &amp; sensitivity analysis. Tableau, Microsoft 365, Google Workspace, Trello, Notion, Canva (intermediate). Python (basic) — financial data manipulation.</p></div>
+    <div class="skill-cat"><h4>Leadership</h4><p>Team leadership, delegation, event &amp; project management, budget/fund management, stakeholder and volunteer coordination.</p></div>
+    <div class="skill-cat"><h4>Teaching &amp; Mentoring</h4><p>Mathematics and English instruction, student advising, educational planning, scholarship guidance.</p></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="section-num" style="color:var(--brass-soft);">08 — Contact</div>
+  <h2>Let's connect.</h2>
+  <div class="contact-grid">
+    <!-- LINK-22: email address -->
+    <div class="contact-item"><div class="k">Email</div><div class="v">—</div><div class="needlink needlink-dark">Add email address</div></div>
+    <!-- LINK-23: LinkedIn URL -->
+    <div class="contact-item"><div class="k">LinkedIn</div><div class="v">—</div><div class="needlink needlink-dark">Add LinkedIn URL</div></div>
+    <!-- LINK-24: resume/CV file link -->
+    <div class="contact-item"><div class="k">Resume / CV</div><div class="v">—</div><div class="needlink needlink-dark">Add file link</div></div>
+  </div>
+  <div class="fineprint">Aye Nyein San — Bachelor of Business (Applied Finance), Western Sydney University Vietnam · Expected graduation December 2026</div>
+</footer>
+
+<script>
+  const tapeItems = [
+    "6/7 GPA","TOP 10% COHORT","IIE ODYSSEY SCHOLAR — 2023","YSEALI ACADEMIC FELLOW — 2025",
+    "7-PERSON TEAM LEADER","$2,000 RELIEF FUNDRAISING","~30 GED STUDENTS TAUGHT","~20 SCHOLARSHIP OUTCOMES",
+    "93/100 CORPORATE FINANCE","1,500+ PEOPLE IMPACTED"
+  ];
+  const tape = document.getElementById('tape');
+  const build = () => tapeItems.map(t => `<span><b>◆</b>${t}</span>`).join('');
+  tape.innerHTML = build() + build();
+
+  const revealEls = document.querySelectorAll('section, .card, .project, .ledger-row');
+  revealEls.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  revealEls.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
+
+
